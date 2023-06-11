@@ -1,0 +1,87 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Font Tag -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,500;1,200;1,300;1,500&display=swap" rel="stylesheet" />
+  <!-- End of Font Tag -->
+  <link rel="stylesheet" href="style1.css" />
+  <script src="script.js" type="module" async></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css1/style1.css') }}">
+  <title>Prediction App</title>
+
+<script>
+        function afficherMessage(element) {
+      var message = element.getAttribute('data-message');
+      var messageElement = document.getElementById('message');
+      messageElement.innerHTML = message;
+      messageElement.style.display = 'block';
+    }
+
+    function cacherMessage() {
+      var messageElement = document.getElementById('message');
+      messageElement.style.display = 'none';
+    }
+  </script>
+
+
+</head>
+
+<body>
+  <main>
+    <div class="content-wrap">
+      <div class="img">
+        <img src="static/slid.jpg" alt="rome" />
+      </div>
+      <div class="form-div">
+        <div id="form-box">
+          <div class="login-box">
+            <h1>House Price Prediction</h1>
+            <p>Enter your preferences to predict the price of your home</p>
+
+
+            <form action="{{ url_for('predict')}}"method="post">
+
+                <input type="text" onmouseover="afficherMessage(this)" onmouseout="cacherMessage()"  name="LotArea" placeholder="LotArea" data-message=" Lot size in square feet" required="required" /><br />
+                <input type="text" onmouseover="afficherMessage(this)" onmouseout="cacherMessage()"  name="OverallQual" placeholder="OverallQual" data-message="Overall material and finish quality.Must be between 0 and 10" required="required" /><br />
+                <input type="text" onmouseover="afficherMessage(this)" onmouseout="cacherMessage()"  name="TotalBsmtSF" placeholder="TotalBsmtSF" data-message="Total square feet of basement area" required="required" /><br />
+                <input type="text" onmouseover="afficherMessage(this)" onmouseout="cacherMessage()"  name="GarageArea" placeholder="GarageArea" data-message="Size of garage in square feet" required="required" /><br />
+                <input type="text" onmouseover="afficherMessage(this)" onmouseout="cacherMessage()"  name="GrLivArea" placeholder="GrLivArea" data-message="Above grade (ground) living area square feet" required="required" /><br />
+
+              <div class="btn-box">
+                <div class="buttons-flex">
+                  <button type="submit" id="login-btn" class="focused-btn">
+                    Predict
+                  </button>
+
+
+
+                </div>
+                <div class="flex-center">
+
+                </div>
+              </div>
+            </form>
+
+
+               <br>
+   <br>
+
+
+<p id="message"><b><center>{{ prediction_text }}</center></b></p>
+
+
+
+                </div>
+          </div>
+         </div>
+        </div>
+      </div>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+ <head>
+        <title>Virtual Assistance</title>
+
+
+     <link rel="stylesheet" href="{{ url_for('static', filename='css1/style2.css') }}">
+    </head>
+<body>
+
+
+<body>
+    <h1>Welcom To Chatbot</h1>
+    <div id="chat-container">
+        <div id="chat-log"></div>
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="Type your message..." required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatForm = document.querySelector('#chat-form');
+            const userInput = document.querySelector('#user-input');
+            const chatLog = document.querySelector('#chat-log');
+
+            chatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const message = userInput.value;
+                userInput.value = '';
+                appendMessage('You: ' + message);
+
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 'message': message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const response = data.message;
+                    appendMessage('Bot: ' + response);
+                })
+                .catch(error => console.error('Error:', error));
+            });
+
+            function appendMessage(message) {
+                const newMessage = document.createElement('p');
+                newMessage.textContent = message;
+                chatLog.appendChild(newMessage);
+            }
+        });
+    </script>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</html>
